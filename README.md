@@ -58,14 +58,14 @@ extension StatusExt on Status {
 
 
 ## Contributing
-Contributions to this extension are welcome. If you have ideas for new features or improvements, please open an issue or create a pull request on the [GitHub repository](https://github.com/yourusername/your-extension-repo).
+Contributions to this extension are welcome. If you have ideas for new features or improvements, please open an issue or create a pull request on the [GitHub repository](https://github.com/faisalansari0367/enumgenerator).
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
-**Enjoy using the "Enum Extensions Generator for Dart" extension!** If you find it useful, please consider giving it a star on [GitHub](https://github.com/yourusername/your-extension-repo). If you encounter any issues or have suggestions for improvements, feel free to open an issue. Happy coding!
+**Enjoy using the "Enum Extensions Generator for Dart" extension!** If you find it useful, please consider giving it a star on [GitHub](https://github.com/faisalansari0367/enumgenerator). If you encounter any issues or have suggestions for improvements, feel free to open an issue. Happy coding!
 ```
 
 Make sure to replace the placeholders like "yourusername" and "your-extension-repo" with your actual GitHub repository information. Customize the README to fit your specific extension and its features.
