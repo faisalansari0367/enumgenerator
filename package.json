@@ -1,21 +1,23 @@
 {
-	"name": "code-actions-sample",
+	"name": "enum-extensions-generator-for-dart",
 	"private": true,
-	"displayName": "Code Actions Provider Sample",
+	"displayName": "Enum Extensions Generator for Dart",
+	"description": "Streamline Dart Enum Extensions with Ease! This Visual Studio Code extension simplifies the generation of extensions for your Dart enums, making your code more readable and maintainable. Automatically create clear and concise extensions to improve code organization and accessibility.",
 	"version": "0.0.2",
-	"publisher": "vscode-samples",
+	"publisher": "faisal",
+	"icon": "images/power.png",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-extension-samples"
+		"url": "https://github.com/faisalansari0367/enumgenerator"
 	},
 	"bugs": {
-		"url": "https://github.com/Microsoft/vscode-extension-samples/issues"
+		"url": "https://github.com/faisalansari0367/enumgenerator/issues"
 	},
 	"engines": {
 		"vscode": "^1.73.0"
 	},
 	"categories": [
-		"Other"
+		"Extension Packs"
 	],
 	"activationEvents": [
 		"onLanguage:dart"

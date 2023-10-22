@@ -2,10 +2,12 @@ import { TextDocument } from "vscode";
 
 class EnumPropertiesHandler {
   public static getProperties(document: TextDocument, lineNumber: number) : string[] {
+   try {
     const line = document.lineAt(lineNumber);
     const properties = [];
     let index = 0;
     while (!line.text.startsWith("}")) {
+      
       const line = document.lineAt(lineNumber + index);
       const text = line.text.trim();
       if (text === "") {
@@ -37,7 +39,15 @@ class EnumPropertiesHandler {
       index++;
     }
     return properties;
-  }
+  
+   } catch (error) {
+
+    console.log(`error in get properties: ${error}`); 
+    return [];
+   }
+  
+}
+
 }
 
 

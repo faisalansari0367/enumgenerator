@@ -30,11 +30,11 @@ class DartEnumExtension {
         const match = block[0];
         if (!match)
             return -1;
-        let index = dartCode.indexOf(match);
+        let index = 0;
         const lines = dartCode.split("\n");
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
-            if (line === match) {
+            if (line.trim() === match.trim()) {
                 index = i;
                 break;
             }
@@ -80,42 +80,47 @@ class DartEnumExtension {
         });
     }
     updateExtension(enumProperties) {
-        const extensionProperties = this.getExtensionProperties();
-        const lineNumber = this.lastLineForExtension(this.enumName);
-        if (extensionProperties.length > enumProperties.length) {
-            // remove properties
-            const missingMembers = extensionProperties.filter((member) => !enumProperties.includes(member));
-            let getters = [];
-            for (let index = 0; index < missingMembers.length; index++) {
-                const element = missingMembers[index];
-                const getter = `  ${this.propertyToGetter(element, this.enumName)}\n`;
-                getters.push(getter);
+        try {
+            const extensionProperties = this.getExtensionProperties();
+            const lineNumber = this.lastLineForExtension(this.enumName);
+            if (extensionProperties.length > enumProperties.length) {
+                // remove properties
+                const missingMembers = extensionProperties.filter((member) => !enumProperties.includes(member));
+                let getters = [];
+                for (let index = 0; index < missingMembers.length; index++) {
+                    const element = missingMembers[index];
+                    const getter = `  ${this.propertyToGetter(element, this.enumName)}\n`;
+                    getters.push(getter);
+                }
+                const codeActionType = vscode_1.CodeActionKind.QuickFix;
+                const name = `Delete extension extra properties`;
+                const action = new vscode_1.CodeAction(name, codeActionType);
+                action.command = {
+                    command: commands_1.Commands.deleteEnumExt,
+                    title: name,
+                    arguments: [getters, this.document],
+                };
+                action.isPreferred = true;
+                return action;
             }
-            const codeActionType = vscode_1.CodeActionKind.QuickFix;
-            const name = `Delete extension extra properties`;
-            const action = new vscode_1.CodeAction(name, codeActionType);
-            action.command = {
-                command: commands_1.Commands.deleteEnumExt,
-                title: name,
-                arguments: [getters, this.document],
-            };
-            action.isPreferred = true;
-            return action;
+            if (extensionProperties.length !== enumProperties.length) {
+                const missingMembers = enumProperties.filter((member) => !extensionProperties.includes(member));
+                let getters = this.generateMissingGetters(missingMembers, this.enumName);
+                const position = new vscode_1.Position(lineNumber, 0);
+                const codeActionType = vscode_1.CodeActionKind.QuickFix;
+                const name = `Update enum extension ${this.enumName}`;
+                const action = new vscode_1.CodeAction(name, codeActionType);
+                action.command = {
+                    command: commands_1.Commands.updateEnumExt,
+                    title: name,
+                    arguments: [position, getters, this.document.uri],
+                };
+                action.isPreferred = true;
+                return action;
+            }
         }
-        if (extensionProperties.length !== enumProperties.length) {
-            const missingMembers = enumProperties.filter((member) => !extensionProperties.includes(member));
-            let getters = this.generateMissingGetters(missingMembers, this.enumName);
-            const position = new vscode_1.Position(lineNumber, 0);
-            const codeActionType = vscode_1.CodeActionKind.QuickFix;
-            const name = `Update enum extension ${this.enumName}`;
-            const action = new vscode_1.CodeAction(name, codeActionType);
-            action.command = {
-                command: commands_1.Commands.updateEnumExt,
-                title: name,
-                arguments: [position, getters, this.document.uri],
-            };
-            action.isPreferred = true;
-            return action;
+        catch (error) {
+            console.log(error);
         }
     }
     generateMissingGetters(missingMembers, enumName) {

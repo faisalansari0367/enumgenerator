@@ -30,11 +30,11 @@ export class DartEnumExtension {
     if (!block) return -1;
     const match = block[0];
     if (!match) return -1;
-    let index = dartCode.indexOf(match);
+    let index = 0;
     const lines = dartCode.split("\n");
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
-      if (line === match) {
+      if (line.trim() === match.trim()) {
         index = i;
         break;
       }
@@ -93,7 +93,8 @@ export class DartEnumExtension {
   }
 
   public updateExtension(enumProperties: string[]): CodeAction | undefined {
-    const extensionProperties = this.getExtensionProperties();
+    try {
+      const extensionProperties = this.getExtensionProperties();
     const lineNumber = this.lastLineForExtension(this.enumName);
     if (extensionProperties.length > enumProperties.length) {
       // remove properties
@@ -136,6 +137,9 @@ export class DartEnumExtension {
       };
       action.isPreferred = true;
       return action;
+    }
+    } catch (error) {
+     console.log(error);
     }
   }
 
